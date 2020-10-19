@@ -6,8 +6,14 @@ import {
 } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 
+import FullPageLayout from '../components/Layouts/FullPageLayout';
+import VerticalPageLayout from '../components/Layouts/VerticalPageLayout';
+import HorizontalPageLayout from '../components/Layouts/HorizontalPageLayout';
+import { useTheme } from '../hooks/theme';
+
 interface RouteProps extends ReactDOMRouteProps {
   isPrivate?: boolean;
+  isfullLayout?: boolean;
   component: React.ComponentType;
 }
 
@@ -18,17 +24,33 @@ interface RouteProps extends ReactDOMRouteProps {
 
 const Route: React.FC<RouteProps> = ({
   isPrivate = false,
+  isfullLayout = false,
   component: Component,
   ...rest
 }) => {
   const { user } = useAuth();
+  const { theme } = useTheme();
 
   return (
     <ReactDOMroute
       {...rest}
       render={({ location }) => {
+        // eslint-disable-next-line no-nested-ternary
         return isPrivate === !!user ? (
-          <Component />
+          // eslint-disable-next-line no-nested-ternary
+          isfullLayout ? (
+            <FullPageLayout>
+              <Component />
+            </FullPageLayout>
+          ) : theme.name === 'light' ? (
+            <VerticalPageLayout>
+              <Component />
+            </VerticalPageLayout>
+          ) : (
+            <HorizontalPageLayout>
+              <Component />
+            </HorizontalPageLayout>
+          )
         ) : (
           <Redirect
             to={{

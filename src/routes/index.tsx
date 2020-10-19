@@ -13,11 +13,11 @@ import Politica from '../pages/Politica';
 
 const Routes: React.FC = () => (
   <Switch>
-    <Route path="/" exact component={SignIn} />
-    <Route path="/signUp" component={SignUp} />
-    <Route path="/forgot-password" component={ForgotPassword} />
-    <Route path="/reset-password" component={ResetPassword} />
-    <Route path="/politica" component={Politica} />
+    <Route path="/" exact component={SignIn} isfullLayout />
+    <Route path="/signUp" component={SignUp} isfullLayout />
+    <Route path="/forgot-password" component={ForgotPassword} isfullLayout />
+    <Route path="/reset-password" component={ResetPassword} isfullLayout />
+    <Route path="/politica" component={Politica} isfullLayout />
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
